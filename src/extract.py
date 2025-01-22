@@ -1,5 +1,6 @@
 import feedparser
 import csv
+import re
 
 class Extract:
     rss_feeds = [
@@ -16,6 +17,12 @@ class Extract:
         "https://www.public.fr/people/familles-royales/feed",
     ]
 
+    wanted_entries_key = [ # content should be here but it is a dict with useless info so it is filterred in save_data
+        "title",
+        "link",
+        "author",
+    ]
+
     def __init__(self):
         pass
 
@@ -30,12 +37,13 @@ class Extract:
         pass
     
     def save_data(self, datas):
-        write_header = True
         with open("articles.csv", "w", newline="", encoding="utf-8") as file:
             writer = csv.writer(file)
+            writer.writerow(self.wanted_entries_key + ["content"])
             for data in datas:
                 for entry in data["entries"]:
-                    if write_header:
-                        write_header = False
-                        writer.writerow(entry.keys())
-                    writer.writerow([entry[key] for key in entry.keys()])
+                    content = self._remove_tags(entry["content"][0]["value"])
+                    writer.writerow([entry[key] for key in self.wanted_entries_key] + [content])
+
+    def _remove_tags(self, text):
+        return re.sub(r"<.*?>", "", text.replace("\n", " "))
