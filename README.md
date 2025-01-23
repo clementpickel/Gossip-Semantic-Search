@@ -13,3 +13,4 @@ python3 src/main.py
 [Feedparser documentation](https://pypi.org/project/feedparser/)
 [Public flux rss](https://www.public.fr/flux-rss)
 [VSD flux rss](https://vsd.fr/flux-rss/)
+[Camembert model](https://huggingface.co/almanach/camembert-base)

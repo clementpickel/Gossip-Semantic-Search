@@ -1,8 +1,11 @@
 import feedparser
 import csv
 import re
+from embedding import Embedding
 
 class Extract:
+    emb = Embedding()
+
     rss_feeds = [
         "https://vsd.fr/actu-people/feed/",
         "https://vsd.fr/tele/feed/",
@@ -39,11 +42,12 @@ class Extract:
     def save_data(self, datas):
         with open("articles.csv", "w", newline="", encoding="utf-8") as file:
             writer = csv.writer(file)
-            writer.writerow(self.wanted_entries_key + ["content"])
+            writer.writerow(self.wanted_entries_key + ["content", "title_vector"])
             for data in datas:
                 for entry in data["entries"]:
+                    title_vector = self.emb.tokenize(entry["title"])
                     content = self._remove_tags(entry["content"][0]["value"])
-                    writer.writerow([entry[key] for key in self.wanted_entries_key] + [content])
+                    writer.writerow([entry[key] for key in self.wanted_entries_key] + [content, title_vector])
 
     def _remove_tags(self, text):
         return re.sub(r"<.*?>", "", text.replace("\n", " "))
