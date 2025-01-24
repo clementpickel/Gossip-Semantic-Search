@@ -2,8 +2,10 @@ import feedparser
 import csv
 import re
 from embedding import Embedding
+import numpy as np
 
 class Extract:
+    np.set_printoptions(threshold=np.inf, suppress=True)
     emb = Embedding()
 
     rss_feeds = [
@@ -40,14 +42,21 @@ class Extract:
         pass
     
     def save_data(self, datas):
+        res = []
         with open("articles.csv", "w", newline="", encoding="utf-8") as file:
             writer = csv.writer(file)
             writer.writerow(self.wanted_entries_key + ["content", "title_vector"])
+
             for data in datas:
                 for entry in data["entries"]:
-                    title_vector = self.emb.tokenize(entry["title"])
+                    title_vector = self.emb.embedding(entry["title"])
                     content = self._remove_tags(entry["content"][0]["value"])
-                    writer.writerow([entry[key] for key in self.wanted_entries_key] + [content, title_vector])
+
+                    line = [entry[key] for key in self.wanted_entries_key] + [content, np.array2string(title_vector, separator=',').replace("\n", "")]
+
+                    writer.writerow(line)
+                    res.append(line)
+        return res
 
     def _remove_tags(self, text):
         return re.sub(r"<.*?>", "", text.replace("\n", " "))

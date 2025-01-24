@@ -14,3 +14,7 @@ python3 src/main.py
 [Public flux rss](https://www.public.fr/flux-rss)
 [VSD flux rss](https://vsd.fr/flux-rss/)
 [Camembert model](https://huggingface.co/almanach/camembert-base)
+
+## References
+
+Martin, L., Muller, B., Suárez, P. J. O., Dupont, Y., Romary, L., de la Clergerie, É. V., Seddah, D., & Sagot, B. (2020). CamemBERT: a Tasty French Language Model.1 Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics.
