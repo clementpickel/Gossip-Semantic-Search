@@ -19,7 +19,7 @@ if __name__ == "__main__":
     emb = Embedding()
     test_article_title = ["David Pujadas le bg de l'info", "La reine d'angleterre résucité 3 jours après", "Linkup: l'endroit idéale pour faire un stage ?"]
     test_article_title_vector = [emb.embedding(title) for title in test_article_title]
-    test_title = emb.embedding("Pujadas")
+    test_title = emb.embedding("Royaume Unis")
 
     index = emb.get_similar(test_title, test_article_title_vector)
     print("title =", test_article_title[index[0]])

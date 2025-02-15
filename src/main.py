@@ -1,29 +1,42 @@
-from extract import Extract
-from embedding import Embedding
+from src.extract import Extract
+from src.embedding import Embedding
+from src.dto import ArticleDto, ParameterDto
+
 import numpy as np
-import ast
+from fastapi import FastAPI, HTTPException
 
-def unpack(data):
-    unpack = data[:, 4]
-    res = [np.array(eval(sub_array)) for sub_array in unpack]
-    return res
+app = FastAPI()
+extract = Extract()
+embedding = Embedding()
+data = extract.get_data_csv()
+data = np.array(data)
+title_vectors = extract.unpack(data)
 
-
-def main():
-    extract = Extract()
-    embedding = Embedding()
-    data = extract.get_data_rss()
-    data = extract.save_data(data)
+@app.post("/api/update/",
+          response_model=None,
+          summary="Update data",
+          description="Get new data from RSS flux and save them.")
+def get_article():
+    global data, title_vectors
+    rss_flux = extract.get_data_rss()
+    data = extract.save_data(rss_flux)
     data = np.array(data)
+    title_vectors = extract.unpack(data)
+    return None
 
-    test_data = "Nagui"
-    test_data = embedding.embedding(test_data)
-    title_vectors = unpack(data)
-    data_index = embedding.get_similar(test_data, title_vectors)
+@app.post("/api/article/",
+          response_model=list[ArticleDto],
+          summary="Get similar articles",
+          description="Returns a list of similar articles based on the input text.")
+def get_article(payload: ParameterDto):
+    if payload.size < 0 or payload.size > 50:
+        raise HTTPException(status_code=400, detail="Size must be between 0 and 50")
+    if payload.text == "":
+        raise HTTPException(status_code=400, detail="Empty string")
 
-    print("title =", data[data_index[0]][0])
-    print("title =", data[data_index[1]][0])
-    print("title =", data[data_index[2]][0])
-
-if __name__ == "__main__":
-    main()
+    text_embedding = embedding.embedding(payload.text)
+    data_index = embedding.get_similar(text_embedding, title_vectors)
+    res = []
+    for i in range(payload.size):
+        res.append(extract.line_to_json(data[data_index[i]]))
+    return res

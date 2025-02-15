@@ -2,8 +2,12 @@
 
 ```
 pip install requirement.txt
-python3 src/main.py
+python -m uvicorn src.main:app --reload
 ```
+
+## Documentation
+
+You can see the Swagger after starting the project at http://localhost:8000/docs
 
 ## Ressources
 
