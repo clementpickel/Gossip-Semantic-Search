@@ -11,13 +11,15 @@ You can see the Swagger after starting the project at http://localhost:8000/docs
 
 ## Ressources
 
-[Vectoring Words (Word Embeddings) - Computerphile - youtube](https://www.youtube.com/watch?v=gQddtTdmG_8)
-[RSS made easy - Growth origin - youtube](https://www.youtube.com/watch?v=6HNUqDL-pI8)
+[Vectoring Words (Word Embeddings)](https://www.youtube.com/watch?v=gQddtTdmG_8), Computerphile
 [Word Embedding using Word2Vec](https://www.geeksforgeeks.org/python-word-embedding-using-word2vec/)
+[Camembert model](https://huggingface.co/almanach/camembert-base)
+[Text embeddings & semantic search](https://www.youtube.com/watch?v=OATCgQtNX2o), HuggingFace
+
 [Feedparser documentation](https://pypi.org/project/feedparser/)
+[RSS made easy](https://www.youtube.com/watch?v=6HNUqDL-pI8), Growth origin
 [Public flux rss](https://www.public.fr/flux-rss)
 [VSD flux rss](https://vsd.fr/flux-rss/)
-[Camembert model](https://huggingface.co/almanach/camembert-base)
 
 ## References
 
