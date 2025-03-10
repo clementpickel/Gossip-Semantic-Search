@@ -9,6 +9,7 @@ class ArticleDto(BaseModel):
     link: str
     author: str
     content: str
+    distance: float
 
 class DBElem(BaseModel):
     title: str

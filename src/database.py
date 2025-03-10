@@ -1,9 +1,9 @@
 import faiss
 import numpy as np
 import google.generativeai as genai
-from dto import DBElem
+from src.dto import DBElem
 import pickle
-from env import GEMINI_API_KEY
+from src.env import GEMINI_API_KEY
 
 genai.configure(api_key=GEMINI_API_KEY)
 
@@ -28,14 +28,14 @@ class Database:
         vector = np.array(response["embedding"], dtype="float32")
         return vector
     
-    def add_no_vector(self, title, link, author, content):
+    def add(self, title, link, author, content):
         """Generate an embedding using Gemini and add the entry to the database."""
         vector = self.get_emb(title)
 
         if vector.shape[0] != self.vector_dim:
             raise ValueError(f"Expected vector of size {self.vector_dim}, got {vector.shape[0]}")
 
-        self.index.add(vector.reshape(1, -1))  # Ensure correct shape for FAISS
+        self.index.add(vector.reshape(1, -1))
         self.metadata.append(DBElem(title=title, link=link, author=author, content=content, vector=vector))
     
     def get_similar(self, query_vector, k=3):
@@ -44,6 +44,8 @@ class Database:
 
         query_vector = np.array([query_vector], dtype="float32")
         distances, indices = self.index.search(query_vector, k)
+        print("distance=", distances)
+        print("indice=", indices)
 
         results = []
         for i, idx in enumerate(indices[0]):
@@ -54,7 +56,7 @@ class Database:
                     "link": entry.link,
                     "author": entry.author,
                     "content": entry.content,
-                    "distance": distances[0][i]
+                    "distance": float(distances[0][i])
                 })
 
         return results
@@ -71,9 +73,21 @@ class Database:
         with open(path + ".meta", "rb") as f:
             self.metadata = pickle.load(f)
 
+    def wipe(self):
+        """Wipe the database by reinitializing the FAISS index and clearing metadata."""
+        self.index = faiss.IndexFlatL2(self.vector_dim)
+        self.metadata.clear()
+
+    def print(self):
+        for data in self.metadata:
+            print(data)
+
+
+
 
 if __name__ == "__main__":
     db = Database()
+    # db.load("db")
     test_article: list[DBElem] = [
     DBElem(
         title="David Pujadas le bg de l'info",
@@ -96,10 +110,12 @@ if __name__ == "__main__":
     ]
 
     for article in test_article:
-        db.add_no_vector(article.title, article.link, article.author, article.content)
+        db.add(article.title, article.link, article.author, article.content)
 
     vector = db.get_emb('La princesse diana passe par dessus la troisième corde')
 
     res = db.get_similar(vector, 1)
     for article in res:
         print(article)
+    db.save('test')
+    db.load('test')
