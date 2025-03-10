@@ -9,3 +9,9 @@ class ArticleDto(BaseModel):
     link: str
     author: str
     content: str
+
+class DBElem(BaseModel):
+    title: str
+    link: str
+    author: str
+    content: str

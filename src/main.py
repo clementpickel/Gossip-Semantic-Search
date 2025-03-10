@@ -16,7 +16,7 @@ title_vectors = extract.unpack(data)
           response_model=None,
           summary="Update data",
           description="Get new data from RSS flux and save them.")
-def get_article():
+def update_db():
     global data, title_vectors
     rss_flux = extract.get_data_rss()
     data = extract.save_data(rss_flux)
