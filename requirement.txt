@@ -1,6 +1,6 @@
 feedparser
 fastapi
 uvicorn
-transformers
-sentencepiece
 numpy
+google-generativeai
+faiss-cpu
