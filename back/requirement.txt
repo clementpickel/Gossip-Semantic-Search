@@ -1,0 +1,6 @@
+feedparser
+fastapi[all]
+uvicorn
+numpy
+google-generativeai
+faiss-cpu

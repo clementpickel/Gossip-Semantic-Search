@@ -1,0 +1,31 @@
+<div class="container">
+  <h2>Gossip Semantic Search</h2>
+  <div>
+    <mat-form-field appearance="outline" class="input">
+      <mat-label>What do you want to know ?</mat-label>
+      <input matInput placeholder="Ex. Who is Miss France" [(ngModel)]="text">
+    </mat-form-field>
+  </div>
+  <div class="input-line">
+    <button mat-fab extended (click)="onClickSearch()">
+      <mat-icon>search</mat-icon>
+      Search
+    </button>
+    <button mat-fab extended (click)="onClickUpdate()">
+      <mat-icon>update</mat-icon>
+      Update
+    </button>
+  </div>
+
+  <div *ngFor="let article of articles" class="card">
+    <h2>{{article.title}}</h2>
+    <p>{{article.content}}</p>
+    <p>By {{article.author}}</p>
+    <p>
+      <a [href]="article.link" target="_blank">{{ article.link }}</a>
+    </p>
+  </div>
+</div>
+
+
+<router-outlet />

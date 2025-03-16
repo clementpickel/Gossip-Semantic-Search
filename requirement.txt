@@ -1,6 +1,0 @@
-feedparser
-fastapi
-uvicorn
-transformers
-sentencepiece
-numpy
