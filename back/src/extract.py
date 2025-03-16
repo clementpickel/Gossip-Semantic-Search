@@ -10,16 +10,16 @@ class Extract:
 
     rss_feeds = [
         "https://vsd.fr/actu-people/feed/",
-        # "https://vsd.fr/tele/feed/",
-        # "https://vsd.fr/societe/feed/",
-        # "https://vsd.fr/culture/feed/",
-        # "https://vsd.fr/loisirs/feed/",
+        "https://vsd.fr/tele/feed/",
+        "https://vsd.fr/societe/feed/",
+        "https://vsd.fr/culture/feed/",
+        "https://vsd.fr/loisirs/feed/",
 
-        # "https://www.public.fr/feed",
-        # "https://www.public.fr/people/feed",
-        # "https://www.public.fr/tele/feed",
-        # "https://www.public.fr/mode/feed",
-        # "https://www.public.fr/people/familles-royales/feed",
+        "https://www.public.fr/feed",
+        "https://www.public.fr/people/feed",
+        "https://www.public.fr/tele/feed",
+        "https://www.public.fr/mode/feed",
+        "https://www.public.fr/people/familles-royales/feed",
     ]
 
     wanted_entries_key = [ # content should be here but it is a dict with more info so it is filterred in save_data
@@ -46,7 +46,6 @@ class Extract:
         return data
     
     def save_data(self, datas):
-        # Loading logic
         total_entries = sum(len(data["entries"]) for data in datas)
         processed_entries = 0
         progress_checkpoints = {i for i in range(10, 101, 10)}
@@ -57,11 +56,8 @@ class Extract:
                 title = self._remove_tags(entry["title"])
                 self.db.add(title, entry["link"], entry["author"], content)
                 
-                # loading progress
                 processed_entries += 1
                 progress = int((processed_entries / total_entries) * 100)
-
-                # loading display
                 if int(progress) in progress_checkpoints:
                     print(f"Save entries to csv: {int(progress)}% completed")
                     progress_checkpoints.remove(int(progress))
