@@ -24,7 +24,6 @@ export class AppComponent {
     ).subscribe(
       res => {
         this.articles = res;
-        console.log(res)
       }
     );
   }

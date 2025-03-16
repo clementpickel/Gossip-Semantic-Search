@@ -1,5 +1,5 @@
 feedparser
-fastapi
+fastapi[all]
 uvicorn
 numpy
 google-generativeai

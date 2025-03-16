@@ -2,12 +2,24 @@ from src.extract import Extract
 from src.dto import ArticleDto, ParameterDto
 from src.database import Database
 import numpy as np
-from fastapi import FastAPI, HTTPException
 from pathlib import Path
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
 db_name = 'db'
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:4200"],
+    allow_credentials=True,
+    allow_methods=["OPTIONS", "GET", "POST"],  # Explicitly list methods
+    allow_headers=["*"],
+    expose_headers=["*"]
+)
+
 database = Database()
 extract = Extract(db=database)
 
@@ -19,7 +31,7 @@ else:
 
 database.print()
 
-@app.post("/api/update/",
+@app.post("/api/update",
           response_model=None,
           summary="Update data",
           description="Get new data from RSS flux and save them.")
@@ -29,10 +41,11 @@ def update_db():
     database.save()
     return None
 
-@app.post("/api/article/",
+@app.post("/api/article",
           response_model=list[ArticleDto],
           summary="Get similar articles",
-          description="Returns a list of similar articles based on the input text.")
+          description="Returns a list of similar articles based on the input text.",
+          )
 def get_article(payload: ParameterDto):
     if payload.size < 0 or payload.size > 50:
         raise HTTPException(status_code=400, detail="Size must be between 0 and 50")
