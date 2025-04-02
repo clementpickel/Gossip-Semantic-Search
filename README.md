@@ -20,7 +20,7 @@ ng serve
 
 You can see the Swagger after starting the project at http://localhost:8000/docs
 
-## How it works ?
+## How does it work ?
 
 ### Update
 
@@ -30,22 +30,22 @@ You can see the Swagger after starting the project at http://localhost:8000/docs
 
 ### Search
 
-1. Get the embeding of teh query from google's api
+1. Get the embeding of the query from google's api
 2. Get the 3 closest vector from the database
 3. Return there metadata
 
 ## Ressources
 
-[FAISS github](https://github.com/facebookresearch/faiss)
-[Obtenir des embedding de texte](https://cloud.google.com/vertex-ai/generative-ai/docs/embeddings/get-text-embeddings?hl=fr)
-[Vectoring Words (Word Embeddings)](https://www.youtube.com/watch?v=gQddtTdmG_8), Computerphile
-[Camembert model](https://huggingface.co/almanach/camembert-base)
-[Text embeddings & semantic search](https://www.youtube.com/watch?v=OATCgQtNX2o), HuggingFace
+[FAISS github](https://github.com/facebookresearch/faiss)  
+[Obtenir des embedding de texte](https://cloud.google.com/vertex-ai/generative-ai/docs/embeddings/get-text-embeddings?hl=fr)  
+[Vectoring Words (Word Embeddings)](https://www.youtube.com/watch?v=gQddtTdmG_8), Computerphile  
+[Camembert model](https://huggingface.co/almanach/camembert-base)  
+[Text embeddings & semantic search](https://www.youtube.com/watch?v=OATCgQtNX2o), HuggingFace  
 
-[Feedparser documentation](https://pypi.org/project/feedparser/)
-[RSS made easy](https://www.youtube.com/watch?v=6HNUqDL-pI8), Growth origin
-[Public flux rss](https://www.public.fr/flux-rss)
-[VSD flux rss](https://vsd.fr/flux-rss/)
+[Feedparser documentation](https://pypi.org/project/feedparser/)  
+[RSS made easy](https://www.youtube.com/watch?v=6HNUqDL-pI8), Growth origin  
+[Public flux rss](https://www.public.fr/flux-rss)  
+[VSD flux rss](https://vsd.fr/flux-rss/)  
 
 ## Reference
 
