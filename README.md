@@ -2,6 +2,8 @@
 
 ## Back
 
+You need add your api key in the back/src/env.py. You can create an api key at # https://aistudio.google.com/app/apikey
+
 ```
 cd ./back/
 pip install requirement.txt
@@ -33,6 +35,25 @@ You can see the Swagger after starting the project at http://localhost:8000/docs
 1. Get the embeding of the query from google's api
 2. Get the 3 closest vector from the database
 3. Return there metadata
+
+## API Key Setup
+
+To run the backend, you need to add your API key to the environment configuration file:
+
+1. Open the file:
+
+   ```
+   back/src/env.py
+   ```
+
+2. Add your API key in the following format:
+
+   ```python
+   GEMINI_API_KEY = "YOUR_GOOGLE_API_KEY"
+   ```
+
+3. You can create and manage your API key at:
+   [https://aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey)
 
 ## Ressources
 
