@@ -6,8 +6,7 @@ from pathlib import Path
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-
-db_name = 'db'
+from src.env import DATABASE_PATH
 
 app = FastAPI()
 
@@ -23,11 +22,11 @@ app.add_middleware(
 database = Database()
 extract = Extract(db=database)
 
-if Path(f"{db_name}.index").exists() and Path(f"{db_name}.meta").exists():
-    database.load(db_name)
+if Path(f"{DATABASE_PATH}.index").exists() and Path(f"{DATABASE_PATH}.meta").exists():
+    database.load(DATABASE_PATH)
 else:
     extract.get_and_save()
-    database.save(db_name)
+    database.save(DATABASE_PATH)
 
 database.print()
 
@@ -38,7 +37,7 @@ database.print()
 def update_db():
     global extract
     extract.get_and_save()
-    database.save()
+    database.save(DATABASE_PATH)
     return None
 
 @app.post("/api/article",
