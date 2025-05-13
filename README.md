@@ -1,9 +1,6 @@
 # Get started
 
 ## Back
-
-You need add your api key in the back/src/env.py. You can create an api key at # https://aistudio.google.com/app/apikey
-
 ```
 cd ./back/
 pip install requirement.txt
